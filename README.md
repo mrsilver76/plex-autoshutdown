@@ -16,9 +16,9 @@ Despite being small, these scripts have some useful features:
 
 ## Download
 
-1. Download the latest version from https://github.com/mrsilver76/plex-autoshutdown/releases
-2. Unzip the file. On Windows, you can double-click the file. On Linux you should use the `unzip` command, which may need to be installed.
-3. Use the file ending in `.bat` for Windows and the file ending `.sh` for Linux.
+1. Get the latest version from https://github.com/mrsilver76/plex-autoshutdown/releases. Windows users should download the zip file, Linux users should download the tar.gz file.
+3. Decompress the file. On Windows, you can double-click the file. On Linux you should use the `gunzip` command.
+4. Use the file ending in `.bat` for Windows and the file ending `.sh` for Linux.
 
 ## Configuration instructions
 
