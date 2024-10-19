@@ -40,7 +40,7 @@ Using `7200` as an example, if you turn back on your Plex server at (say) 1am, t
 
 The script uses the Plex API in order to determine whether or not anything is streaming. To do this, it needs a token to use for authentication. There are instructions on how to find the token for your Plex server at https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
 
-You should modify this line to include your token (capitalisation is important). If you provide an invalid token then the script will always report that something is streaming.
+You should modify this line to include your token (capitalisation is important). If you provide an invalid token then the script will always report that something is streaming. The token in the code (`abcd1234efgh5678`) is invalid and will not work.
 
 > :warning: You should never share your Plex token with anyone else.
 
