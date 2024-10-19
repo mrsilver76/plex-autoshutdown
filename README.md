@@ -4,7 +4,7 @@
 
 This script is useful for people who have no requirement to run their Plex server 24/7 and have periods of time where no-one is using their server (eg. the early hours of the morning).
 
-There are two scripts, one for Windows uses and one for Linux users. The Linux one may work with macOS, but I have no way of verifying. I'm happy to take a submission/fix from someone who owns one. 
+**There are two scripts, one for Windows uses and one for Linux users.** The Linux one may work with macOS, but I have no way of verifying. I'm happy to take a submission/fix from someone who owns one. 
 
 ## Features
 
@@ -17,8 +17,8 @@ Despite being small, these scripts have some useful features:
 ## Download
 
 1. Download the latest version from https://github.com/mrsilver76/plex-autoshutdown/releases
-2. Unzip the file. On Windows, you can double-click the file. On Linux you should use `unzip main.zip`
-3. Use the file ending in `bat` for Windows and the file ending `sh` for Linux.
+2. Unzip the file. On Windows, you can double-click the file. On Linux you should use the `unzip` command, which may need to be installed.
+3. Use the file ending in `.bat` for Windows and the file ending `.sh` for Linux.
 
 ## Configuration instructions
 
@@ -98,7 +98,7 @@ As the script outputs messages, this will be emailed to you. The use of `>/dev/n
 
 Most modern computer BIOS’ allow you to configure a computer to power on at a specific time. You will need to Google the brand of your computer/motherboard to find out how to access the BIOS. If it usually through pressing one of the F keys on power up.
 
-Whilst you are configuring this, we recommend you enable the “automatically power on after power loss” option.
+Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
 
 ## Known issues
 
@@ -114,3 +114,8 @@ Please raise an issue at https://github.com/mrsilver76/plex-autoshutdown/issues.
 Possible future improvements can be found at https://github.com/mrsilver76/plex-autoshutdown/labels/enhancement. Unless there is significant interest, it's doubtful I'll implement many of them as the script in its current form suits me just fine.
 
 Pull requests are accepted, provided the capability will be useful to the majority of users. This is to avoid having 101 niche features and stop the script being something easy to set up and configure.
+
+## Version history
+
+### 1.0 (19th October 2024)
+- Initial release.
