@@ -4,19 +4,19 @@
 
 This script is useful for people who have no requirement to run their Plex server 24/7 and have periods of time where no-one is using their server (eg. the early hours of the morning).
 
-There are two scripts, one for Windows uses and one for Linux users. There is no script (yet) for people running MacOS – although submissions are welcome.
+There are two scripts, one for Windows uses and one for Linux users. The Linux one may work with macOS, but I have no way of verifying. I'm happy to take a submission/fix from someone who owns one. 
 
 ## Features
 
 Despite being small, these scripts have some useful features:
 
-1. Easy to set up, there is (literally) only one option that you must configure.
+1. Easy to set up, there is (literally) only one option that you *must* configure.
 2. Will not shut down a machine if there are active Plex streams.
 3. Will not force a machine to shut down for a (configurable) period of time after power up. This ensures that you can override the script by manually powering on your server and it won't promptly shut it down again.
 
 ## Download
 
-1. Download the latest version from https://github.com/mrsilver76/itunes_playlist_exporter/releases
+1. Download the latest version from https://github.com/mrsilver76/plex-autoshutdown/releases
 2. Unzip the file. On Windows, you can double-click the file. On Linux you should use `unzip main.zip`
 3. Use the file ending in `bat` for Windows and the file ending `sh` for Linux.
 
@@ -107,16 +107,10 @@ Whilst you are configuring this, we recommend you enable the “automatically po
 
 ## Questions/problems?
 
-Please raise a ticket.
+Please raise an issue at https://github.com/mrsilver76/plex-autoshutdown/issues.
 
-## Want to make an improvement?
+## Future improvements
 
-Pull requests are accepted provided:
+Possible future improvements can be found at https://github.com/mrsilver76/plex-autoshutdown/labels/enhancement. Unless there is significant interest, it's doubtful I'll implement many of them as the script in its current form suits me just fine.
 
-1. They are offered under the unlicence (https://unlicense.org)
-2. The feature/change is well documented and easy to understand.
-3. The feature/change has sensible defaults.
-4. The feature/change will be useful to the majority of users (I'm trying to avoid having 1001 niche features)
-5. The feature/change has been implemented (where possible) in both Windows and Linux.
-
-I encourage people to use the same variable names in scripts to make documenting the options easier.
+Pull requests are accepted, provided the capability will be useful to the majority of users. This is to avoid having 101 niche features and stop the script being something easy to set up and configure.
