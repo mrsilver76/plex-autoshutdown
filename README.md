@@ -37,6 +37,8 @@ This is the minimum amount of time (in seconds) that a server must have been run
 
 Using `7200` as an example, if you turn back on your Plex server at (say) 1am, then it will not attempt to turn the server back off again until 3am, even if you stop using it at 1:30am.
 
+> :warning: If you set this value too low, then your server may turn off very quickly after you have turned it back on.
+
 ### PLEX_TOKEN
 
 The script uses the Plex API in order to determine whether or not anything is streaming. To do this, it needs a token to use for authentication. There are instructions on how to find the token for your Plex server at https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
@@ -76,6 +78,8 @@ You need to set up a scheduled task to run the script. These instructions assume
 - Ensure that “Wake the computer to run this task” is turned off.
 - Click on “OK”.
 
+> :warning: If you run the script too frequently then the server may turn off whilst you are picking something else to watch.
+
 ## Installation instructions (Linux)
 
 You need to set up a cron to run this task. These instructions assume that you want to turn your server off from between midnight and 5:45am.
@@ -86,6 +90,8 @@ You need to set up a cron to run this task. These instructions assume that you w
 - Save the file.
 
 As the script outputs messages, this will be emailed to you. The use of `>/dev/null` ensures that this does not happen.
+
+> :warning: If you run the script too frequently then the server may turn off whilst you are picking something else to watch.
 
 ## Configuring automatic power on
 
