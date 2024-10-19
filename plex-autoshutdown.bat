@@ -70,7 +70,7 @@ if %uptime_seconds% LSS %MIN_UPTIME% (
 
 rem Check if Plex has any active streams
 
-curl -s "http://192.168.0.3:32400/status/sessions?X-Plex-Token=%PLEX_TOKEN%" | find /I "MediaContainer size=""0"">" >NUL
+curl -s "http://127.0.0.1:32400/status/sessions?X-Plex-Token=%PLEX_TOKEN%" | find /I "MediaContainer size=""0"">" >NUL
 if errorlevel 1 (
 	echo Script terminated. Plex is streaming.
 	exit /b

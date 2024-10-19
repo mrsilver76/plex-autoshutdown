@@ -66,7 +66,7 @@ fi
 
 # Check if Plex has any active streams
 
-if ! curl -s "http://192.168.0.3:32400/status/sessions?X-Plex-Token=$PLEX_TOKEN" | grep -i "MediaContainer size=\"0\">" >/dev/null; then
+if ! curl -s "http://127.0.0.1:32400/status/sessions?X-Plex-Token=$PLEX_TOKEN" | grep -i "MediaContainer size=\"0\">" >/dev/null; then
 	echo Script terminated. Plex is streaming.
 	exit 1
 fi
