@@ -1,4 +1,4 @@
-# Plex Autoshudown
+# Plex Autoshutdown
 
 *A simple script which, when executed, will check that no-one is using Plex before shutting down the server it is running on.*
 
