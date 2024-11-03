@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 rem Plex Autoshutdown (for Windows)
-rem Version 1.0 (released 19 October 2024)
+rem Version 1.1 (released 3rd November 2024)
 rem https://github.com/mrsilver76/plex-autoshutdown
 rem
 rem A simple script which, when executed, will check that no-one is using Plex
@@ -36,6 +36,13 @@ rem For more information, please refer to https://unlicense.org
 
 rem ----- Configuration settings -------------------------------------------
 
+rem PLEX_TOKEN
+rem The API token required for this script to be able to access Plex.
+rem Do not share your token with anyone. For details on how to find this, see
+rem https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
+
+set PLEX_TOKEN=abcd1234efgh5678
+
 rem MIN_UPTIME
 rem The minimum amount of time (in seconds) the server needs to be running
 rem before this script will run. If the server is manually powered on after
@@ -43,13 +50,6 @@ rem it has been shut down then this will prevent it from being shut down again
 rem for that period of time. The recommended value is 7200 = 2 hours.
 
 set MIN_UPTIME=7200
-
-rem PLEX_TOKEN
-rem The API token required for this script to be able to access Plex.
-rem Do not share your token with anyone. For details on how to find this, see
-rem https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
-
-set PLEX_TOKEN=abcd1234efgh5678
 
 rem ----- End of configuration settings. Code starts here ------------------
 
@@ -71,10 +71,28 @@ if %uptime_seconds% LSS %MIN_UPTIME% (
 rem Check if Plex has any active streams
 
 curl -s "http://127.0.0.1:32400/status/sessions?X-Plex-Token=%PLEX_TOKEN%" | find /I "MediaContainer size=""0"">" >NUL
-if errorlevel 1 (
+if %errorlevel%==1 (
 	echo Script terminated. Plex is streaming.
 	exit /b
 )
+
+rem Check if Plex is transcoding and/or downloading
+
+curl -s "http://127.0.0.1:32400/activities?X-Plex-Token=%PLEX_TOKEN%" -o "%TEMP%\plex-autoshutdown.tmp" >NUL
+find /I "type=""media.download""" "%TEMP%\plex-autoshutdown.tmp" >NUL
+if %errorlevel%==0 (
+    echo Script terminated. Plex is transcoding and/or downloading.
+	del /f "%TEMP%\plex-autoshutdown.tmp"
+	exit /b
+) else (
+	find /I "type=""media.offline.transcode""" "%TEMP%\plex-autoshutdown.tmp" >NUL
+	if %errorlevel%==0 (
+        echo Script terminated. Plex is transcoding and/or downloading.
+		del /f "%TEMP%\plex-autoshutdown.tmp"
+		exit /b
+    )
+)
+del /f "%TEMP%\plex-autoshutdown.tmp"
 
 rem Shut down the server
 
