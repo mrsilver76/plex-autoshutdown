@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Plex Autoshutdown (for Linux)
-# Version 1.0 (released 19 October 2024)
+# Version 1.1 (released 3rd November 2024)
 # https://github.com/mrsilver76/plex-autoshutdown
 #
 # A simple script which, when executed, will check that no-one is using Plex
@@ -35,6 +35,13 @@
 
 # ----- Configuration settings -------------------------------------------
 
+# PLEX_TOKEN
+# The API token required for this script to be able to access Plex.
+# Do not share your token with anyone. For details on how to find this, see
+# https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
+
+PLEX_TOKEN=abcd1234efgh5678
+
 # MIN_UPTIME
 # The minimum amount of time (in seconds) the server needs to be running
 # before this script will run. If the server is manually powered on after
@@ -42,13 +49,6 @@
 # for that period of time. The recommended value is 7200 = 2 hours.
 
 MIN_UPTIME=7200
-
-# PLEX_TOKEN
-# The API token required for this script to be able to access Plex.
-# Do not share your token with anyone. For details on how to find this, see
-# https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
-
-PLEX_TOKEN=abcd1234efgh5678
 
 # ----- End of configuration settings. Code starts here ------------------
 
@@ -68,6 +68,13 @@ fi
 
 if ! curl -s "http://127.0.0.1:32400/status/sessions?X-Plex-Token=$PLEX_TOKEN" | grep -i "MediaContainer size=\"0\">" >/dev/null; then
 	echo Script terminated. Plex is streaming.
+	exit 1
+fi
+
+# Check if Plex is transcoding and/or downloading
+
+if curl -s "http://127.0.0.1:32400/activities?X-Plex-Token=$PLEX_TOKEN" | grep -qE 'type="media\.download"|type="media\.offline\.transcode"'; then
+    echo Script terminated. Plex is transcoding and/or downloading
 	exit 1
 fi
 
