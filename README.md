@@ -11,7 +11,7 @@ This script is useful for people who have no requirement to run their Plex serve
 Despite being small, these scripts have some useful features:
 
 1. Easy to set up, there is (literally) only one option that you *must* configure.
-2. Will not shut down a machine if there are active Plex streams.
+2. Will not shut down a machine if there are active Plex streams, downloads or transcodes.
 3. Will not force a machine to shut down for a (configurable) period of time after power up. This ensures that you can override the script by manually powering on your server and it won't promptly shut it down again.
 
 ## Download
@@ -26,15 +26,7 @@ To configure the script, open it up in your preferred text editor.
 
 For Windows, I recommend [Notepad++](https://notepad-plus-plus.org/) but Notepad will do. For Linux, I recommend [nano](https://www.nano-editor.org/) which usually comes preinstalled with most distributions.
 
-There are two things in the code you can easily change:
-
-### MIN_UPTIME
-
-This is the minimum amount of time (in seconds) that a server must have been running (the “uptime”) before the script will work. The default (and recommended) value is `7200` which equates to 2 hours.
-
-Using `7200` as an example, if you turn back on your Plex server at (say) 1am, then it will not attempt to turn the server back off again until 3am, even if you stop using it at 1:30am.
-
-> :warning: If you set this value too low, then your server may turn off very quickly after you have turned it back on.
+There are two things in the code you can easily change. You must change the `PLEX_TOKEN` setting, the other one is optional:
 
 ### PLEX_TOKEN
 
@@ -42,7 +34,18 @@ The script uses the Plex API in order to determine whether or not anything is st
 
 You should modify this line to include your token (capitalisation is important). If you provide an invalid token then the script will always report that something is streaming. The token in the code (`abcd1234efgh5678`) is invalid and will not work.
 
-> :warning: You should never share your Plex token with anyone else.
+> [!CAUTION]
+> You should never share your Plex token with anyone else.
+
+### MIN_UPTIME
+
+This is the minimum amount of time (in seconds) that a server must have been running (the “uptime”) before the script will work. The default (and recommended) value is `7200` which equates to 2 hours.
+
+Using `7200` as an example, if you turn back on your Plex server at (say) 1am, then it will not attempt to turn the server back off again until 3am, even if you stop using it at 1:30am.
+
+> [!IMPORTANT]
+> If you set this value too low, then your server may turn off very quickly after you have turned it back on.
+
 
 ## Running instructions
 
@@ -54,7 +57,8 @@ To run on your Plex server, you will need to set up the script to run multiple t
 
 These instructions assume that you want to turn your server off from between midnight and 6am and that you will check the server status every 15 minutes.
 
-> :warning: If you check the server status too frequently then there is a higher chance that the server will power off whilst you are picking something else to play.
+> [!IMPORTANT]
+> If you check the server status too frequently then there is a higher chance that the server will power off whilst you are picking something else to play.
 
 You need to set up a scheduled task to run the script:
 
@@ -83,7 +87,8 @@ You need to set up a scheduled task to run the script:
 
 These instructions assume that you want to turn your server off from between midnight and 5:45am and that you will check the server status every 15 minutes.
 
-> :warning: If you check the server status too frequently then there is a higher chance that the server will power off whilst you are picking something else to play.
+> [!IMPORTANT]
+> If you check the server status too frequently then there is a higher chance that the server will power off whilst you are picking something else to play.
 
 You need to set up a cron to run this task:
 
@@ -98,7 +103,8 @@ As the script outputs messages, this will be emailed to you. The use of `>/dev/n
 
 Most modern computer BIOS’ allow you to configure a computer to power on at a specific time. You will need to Google the brand of your computer/motherboard to find out how to access the BIOS. If it usually through pressing one of the F keys on power up.
 
-Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
+> [!TIP]
+> Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
 
 ## Known issues
 
@@ -116,6 +122,11 @@ Possible future improvements can be found at https://github.com/mrsilver76/plex-
 Pull requests are accepted, provided the capability will be useful to the majority of users. This is to avoid having 101 niche features and stop the script being something easy to set up and configure.
 
 ## Version history
+
+### 1.1 (3rd November 2024)
+- Added support for blocking shutdown if content is being transcoded or downloaded.
+- Swapped the configuration variables so that the mandatory one is at the top.
+- Cleaned up the documentation.
 
 ### 1.0 (19th October 2024)
 - Initial release.
