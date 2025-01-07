@@ -10,9 +10,11 @@ This script is useful for people who have no requirement to run their Plex serve
 
 Despite being small, these scripts have some useful features:
 
-1. Easy to set up, there is (literally) only one option that you *must* configure.
-2. Will not shut down a machine if there are active Plex streams, downloads or transcodes.
-3. Will not force a machine to shut down for a (configurable) period of time after power up. This ensures that you can override the script by manually powering on your server and it won't promptly shut it down again.
+* 🖥️ Works on Windows and Linux (and possibly macOS)
+* 🛠️ Easy to set up, there is (literally) only one option that you *must* configure.
+* 📽️ Will not shut down a machine if there are active Plex streams (audio or video).
+* 💾 Will not shut down a machine if there are active Plex downloads.
+* ⏲️ Will not force a machine to shut down for a (configurable) period of time after power up. This ensures that you can override the script by manually powering on your server and it won't promptly shut it down again.
 
 ## Download
 
