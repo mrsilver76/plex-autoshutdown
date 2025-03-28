@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 rem Plex Autoshutdown (for Windows)
-rem Version 1.1 (released 3rd November 2024)
+rem Version 1.2 (released 28th March 2025)
 rem https://github.com/mrsilver76/plex-autoshutdown
 rem
 rem A simple script which, when executed, will check that no-one is using Plex
@@ -76,22 +76,35 @@ if %errorlevel%==1 (
 	exit /b
 )
 
-rem Check if Plex is transcoding and/or downloading
+rem Check if Plex is downloading
 
 curl -s "http://127.0.0.1:32400/activities?X-Plex-Token=%PLEX_TOKEN%" -o "%TEMP%\plex-autoshutdown.tmp" >NUL
+
 find /I "type=""media.download""" "%TEMP%\plex-autoshutdown.tmp" >NUL
 if %errorlevel%==0 (
-    echo Script terminated. Plex is transcoding and/or downloading.
+    echo Script terminated. Plex is downloading.
 	del /f "%TEMP%\plex-autoshutdown.tmp"
 	exit /b
-) else (
-	find /I "type=""media.offline.transcode""" "%TEMP%\plex-autoshutdown.tmp" >NUL
-	if %errorlevel%==0 (
-        echo Script terminated. Plex is transcoding and/or downloading.
-		del /f "%TEMP%\plex-autoshutdown.tmp"
-		exit /b
-    )
+) 
+
+rem Check if Plex is transcoding
+
+find /I "type=""media.offline.transcode""" "%TEMP%\plex-autoshutdown.tmp" >NUL
+if %errorlevel%==0 (
+	echo Script terminated. Plex is transcoding.
+	del /f "%TEMP%\plex-autoshutdown.tmp"
+	exit /b
 )
+
+rem Check if Plex is streaming or recording live TV
+
+find /I "type=""grabber.grab""" "%TEMP%\plex-autoshutdown.tmp" >NUL
+if %errorlevel%==0 (
+	echo Script terminated. Plex is streaming or recording live TV.
+	del /f "%TEMP%\plex-autoshutdown.tmp"
+	exit /b
+)
+
 del /f "%TEMP%\plex-autoshutdown.tmp"
 
 rem Shut down the server

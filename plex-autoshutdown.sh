@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Plex Autoshutdown (for Linux)
-# Version 1.1 (released 3rd November 2024)
+# Version 1.2 (released 28th March 2025)
 # https://github.com/mrsilver76/plex-autoshutdown
 #
 # A simple script which, when executed, will check that no-one is using Plex
@@ -71,12 +71,33 @@ if ! curl -s "http://127.0.0.1:32400/status/sessions?X-Plex-Token=$PLEX_TOKEN" |
 	exit 1
 fi
 
-# Check if Plex is transcoding and/or downloading
+# Check if Plex is downloading
 
-if curl -s "http://127.0.0.1:32400/activities?X-Plex-Token=$PLEX_TOKEN" | grep -qE 'type="media\.download"|type="media\.offline\.transcode"'; then
-    echo Script terminated. Plex is transcoding and/or downloading
+curl -s "http://127.0.0.1:32400/activities?X-Plex-Token=$PLEX_TOKEN" > /tmp/plex-autoshutdown.tmp
+
+if grep -qE 'type="media\.download"' /tmp/plex-autoshutdown.tmp; then
+	echo Script terminated. Plex is downloading.
+	rm -f /tmp/plex-autoshutdown.tmp
 	exit 1
 fi
+
+# Check if Plex is transcoding
+
+if grep -qE 'type="media\.offline\.transcode"' /tmp/plex-autoshutdown.tmp; then
+	echo Script terminated. Plex is transcoding.
+	rm -f /tmp/plex-autoshutdown.tmp
+	exit 1
+fi
+
+# Check if Plex is streaming or recording live TV
+
+if grep -qE 'type="grabber\.grab"' /tmp/plex-autoshutdown.tmp; then
+	echo Script terminated. Plex is streaming or recording live TV.
+	rm -f /tmp/plex-autoshutdown.tmp
+	exit 1
+fi
+
+rm -f /tmp/plex-autoshutdown.tmp
 
 # Shut down the server
 
