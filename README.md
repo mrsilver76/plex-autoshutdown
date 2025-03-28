@@ -11,10 +11,11 @@ This script is useful for people who have no requirement to run their Plex serve
 Despite being small, these scripts have some useful features:
 
 * 🖥️ Works on Windows and Linux (and possibly macOS)
-* 🛠️ Easy to set up, there is (literally) only one option that you *must* configure.
-* 📽️ Will not shut down a machine if there are active Plex streams (audio or video).
-* 💾 Will not shut down a machine if there are active Plex downloads.
-* ⏲️ Will not force a machine to shut down for a (configurable) period of time after power up. This ensures that you can override the script by manually powering on your server and it won't promptly shut it down again.
+* ⚙️ Easy to set up, there is (literally) only one option that you must configure.
+* 🎬 Will not shut down a machine if there are active Plex streams (audio or video).
+* 📥 Will not shut down a machine if there are active Plex downloads.
+* 📺 Will not shut down a machine if live TV is being watched or recorded.
+* ⏳ Will not force a machine to shut down for a (configurable) period of time after power up.
 
 ## Download
 
@@ -124,6 +125,11 @@ Possible future improvements can be found at https://github.com/mrsilver76/plex-
 Pull requests are accepted, provided the capability will be useful to the majority of users. This is to avoid having 101 niche features and stop the script being something easy to set up and configure.
 
 ## Version history
+
+### 1.2 (28th March 2025)
+- Added support for blocking shutdown if live TV is being recorded or viewed.
+- Error messages now differentiate between transcoding and downloading when reporting why a shutdown is being blocked.
+- Fixed a bug where the temporary file wasn't always removed after the script finishes.
 
 ### 1.1 (3rd November 2024)
 - Added support for blocking shutdown if content is being transcoded or downloaded.
