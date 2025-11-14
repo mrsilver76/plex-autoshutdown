@@ -125,6 +125,10 @@ Some possible improvements I've considered, but won't implement unless there is 
 - **Sleep option, instead of power down.** Provide an option to put the machine into sleep/standby rather than fully powering it down when no active streams are detected. 
 - **Test command line option.** Add a “dry-run” or “test” command line flag that will simulate the shutdown check without executing the shutdown, for validation purposes. 
 
+## 📝 Attribution
+- Plex is a registered trademark of Plex, Inc. This tool is not affiliated with or endorsed by Plex, Inc.
+- With thanks to [https://www.plexopedia.com/plex-media-server/api/](https://www.plexopedia.com/plex-media-server/api/) for Plex API documentation.
+
 ## 🕰️ Version history
 
 ### 1.2 (28th March 2025)
