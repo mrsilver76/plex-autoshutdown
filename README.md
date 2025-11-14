@@ -6,7 +6,7 @@ This script is useful for people who have no requirement to run their Plex serve
 
 **There are two scripts, one for Windows uses and one for Linux users.** The Linux one may work with macOS, but I have no way of verifying. I'm happy to take a submission/fix from someone who owns one. 
 
-## Features
+## 🧰 Features
 
 Despite being small, these scripts have some useful features:
 
@@ -17,46 +17,41 @@ Despite being small, these scripts have some useful features:
 * 📺 Will not shut down a machine if live TV is being watched or recorded.
 * ⏳ Will not force a machine to shut down for a (configurable) period of time after power up.
 
-## Download
+## 📦 Download
 
 1. Get the latest version from https://github.com/mrsilver76/plex-autoshutdown/releases. Windows users should download the zip file, Linux users should download the tar.gz file.
 3. Decompress the file. On Windows, you can double-click the file. On Linux you should use the `gunzip` command.
 4. Use the file ending in `.bat` for Windows and the file ending `.sh` for Linux.
 
-## Configuration instructions
+## ⚙️ Configuration
 
-To configure the script, open it up in your preferred text editor.
-
-For Windows, I recommend [Notepad++](https://notepad-plus-plus.org/) but Notepad will do. For Linux, I recommend [nano](https://www.nano-editor.org/) which usually comes preinstalled with most distributions.
+To configure the script, open it up in your preferred text editor. For Windows, Notepad will do. For Linux, I recommend [nano](https://www.nano-editor.org/) which usually comes preinstalled with most distributions.
 
 There are two things in the code you can easily change. You must change the `PLEX_TOKEN` setting, the other one is optional:
 
-### PLEX_TOKEN
+- **`PLEX_TOKEN`**  
+  The script uses the Plex API in order to determine whether or not anything is streaming. To do this, it needs a token to use for authentication. Plex provides instructions on how to find the token for your Plex server [here](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/). 
 
-The script uses the Plex API in order to determine whether or not anything is streaming. To do this, it needs a token to use for authentication. There are instructions on how to find the token for your Plex server at https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
-
-You should modify this line to include your token (capitalisation is important). If you provide an invalid token then the script will always report that something is streaming. The token in the code (`abcd1234efgh5678`) is invalid and will not work.
+  You should modify this line to include your token (capitalisation is important). If you provide an invalid token then the script will always report that something is streaming. The token in the code (`abcd1234efgh5678`) is invalid and will not work.
 
 > [!CAUTION]
 > You should never share your Plex token with anyone else.
 
-### MIN_UPTIME
+- **`MIN_UPTIME`**  
+  This is the minimum amount of time (in seconds) that a server must have been running (the “uptime”) before the script will work. The default (and recommended) value is `7200` which equates to 2 hours.
 
-This is the minimum amount of time (in seconds) that a server must have been running (the “uptime”) before the script will work. The default (and recommended) value is `7200` which equates to 2 hours.
-
-Using `7200` as an example, if you turn back on your Plex server at (say) 1am, then it will not attempt to turn the server back off again until 3am, even if you stop using it at 1:30am.
+  Using `7200` as an example, if you turn back on your Plex server at (say) 1am, then it will not attempt to turn the server back off again until 3am, even if you stop using it at 1:30am.
 
 > [!IMPORTANT]
 > If you set this value too low, then your server may turn off very quickly after you have turned it back on.
 
-
-## Running instructions
+## ▶️ Running the script
 
 To run the script, you can either double-click on it or run it from the command line. If you are using Linux then you will probably need to make the script executable with `chmod +x plex-autoshutdown.sh`.
 
 To run on your Plex server, you will need to set up the script to run multiple times over the night. This is to ensure that if the shutdown is blocked because something is being streamed, then it will try again at a later time.
 
-## Installation instructions (Windows)
+## 🪟 Installation (Windows)
 
 These instructions assume that you want to turn your server off from between midnight and 6am and that you will check the server status every 15 minutes.
 
@@ -86,7 +81,7 @@ You need to set up a scheduled task to run the script:
 - Ensure that “Wake the computer to run this task” is turned off.
 - Click on “OK”.
 
-## Installation instructions (Linux)
+## 🐧 Installation (Linux)
 
 These instructions assume that you want to turn your server off from between midnight and 5:45am and that you will check the server status every 15 minutes.
 
@@ -102,29 +97,35 @@ You need to set up a cron to run this task:
 
 As the script outputs messages, this will be emailed to you. The use of `>/dev/null` ensures that this does not happen but you can also redirect it to a file if you wish.
 
-## Configuring automatic power on
+## 🔌 Automatic power on
 
 Most modern computer BIOS’ allow you to configure a computer to power on at a specific time. You will need to Google the brand of your computer/motherboard to find out how to access the BIOS. If it usually through pressing one of the F keys on power up.
 
 > [!TIP]
 > Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
 
-## Known issues
+## ⚠️ Known issues
 
 - The Plex API will often incorrectly report that content is being streamed for several minutes after it has been stopped. There is no workaround for this.
 - There is no validation of the Plex token. If you've supplied one that doesn't work then the script will incorrectly report that something is being streamed and your server will never shut down.
 
-## Questions/problems?
+## 🛟 Questions/problems?
 
 Please raise an issue at https://github.com/mrsilver76/plex-autoshutdown/issues.
 
-## Future improvements
+## 💡 Future development: open but unplanned
 
-Possible future improvements can be found at https://github.com/mrsilver76/plex-autoshutdown/labels/enhancement. Unless there is significant interest, it's doubtful I'll implement many of them as the script in its current form suits me just fine.
+This script currently meets the needs it was designed for, and no major new features are planned at this time. However, the project remains open to community suggestions and improvements. If you have ideas or see ways to enhance the tool, please feel free to submit a [feature request](https://github.com/mrsilver76/plex-autoshutdown/issues).
 
-Pull requests are accepted, provided the capability will be useful to the majority of users. This is to avoid having 101 niche features and stop the script being something easy to set up and configure.
+Some possible improvements I've considered, but won't implement unless there is demand, are:
 
-## Version history
+- **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
+- **Output to logs instead of screen.** Add or improve logging so that script output goes to log files rather than just the console, useful for monitoring and debugging. 
+- **Check Plex token prior to checking for streams.** Validate the authentication token for Plex Media Server before attempting to check for active streams, to handle auth failures gracefully. 
+- **Sleep option, instead of power down.** Provide an option to put the machine into sleep/standby rather than fully powering it down when no active streams are detected. 
+- **Test command line option.** Add a “dry-run” or “test” command line flag that will simulate the shutdown check without executing the shutdown, for validation purposes. 
+
+## 🕰️ Version history
 
 ### 1.2 (28th March 2025)
 - Added support for blocking shutdown if live TV is being recorded or viewed.
