@@ -1,6 +1,6 @@
 # Plex Autoshutdown
 
-<p><img src="https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white" alt="Windows"> <img src="https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black" alt="Linux"> <img src="https://img.shields.io/badge/License-Unlicense-000000?logo=unlicense&logoColor=white" alt="Unlicense"> <img src="https://img.shields.io/github/downloads/mrsilver76/plex-autoshutdown/total"></p>
+<p><img src="https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white" alt="Windows"> <img src="https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black" alt="Linux"> <img src="https://img.shields.io/badge/License-Unlicense-000000?logo=unlicense&logoColor=white" alt="Unlicense"></p>
 
 *A simple script which will check that no-one is using Plex before shutting down the server it is running on.*
 
