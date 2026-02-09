@@ -119,7 +119,12 @@ Please raise an issue at https://github.com/mrsilver76/plex-autoshutdown/issues.
 
 This script currently meets the needs it was designed for, and no major new features are planned at this time. However, the project remains open to community suggestions and improvements. If you have ideas or see ways to enhance the tool, please feel free to submit a [feature request](https://github.com/mrsilver76/plex-autoshutdown/issues).
 
-Some possible improvements I've considered, but won't implement unless there is demand, are:
+Some big improvements I'm thinking about implementing:
+
+- **Check for running processes**. Allow a list of processes that, if running, should block shutdown of the server. One example would be `Plex Transcoder.exe` but could be anything else that people want to allow to complete running before shutdown.
+- **Check for online IPs**. Allow a list of IP addresses that, if in use, should block shutdown of the server. One example would be the IP address of your TV set, meaning that if it's on then the script will not shut down the Plex server.
+
+Some other improvements I'm thinking about, but won't implement unless there is demand, are:
 
 - **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
 - **Output to logs instead of screen.** Add or improve logging so that script output goes to log files rather than just the console, useful for monitoring and debugging. 
