@@ -20,6 +20,7 @@ Despite being small, these scripts have some useful features:
 * 🧩 Will not shut down a machine if certain processes (Plex related or not) are running.
 * 🏠 Will not shutdown a machine if certain devices are active on the network (e.g. a television).
 * ⏳ Will not force a machine to shut down for a (configurable) period of time after power up.
+* 🧪 Test mode to verify the logic without accidentally powering off your machine.
 
 ## 📦 Download
 
@@ -155,6 +156,7 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 - Improved the formatting of the output to make troubleshooting easier.
 - Added support for blocking shutdown if certain processes are running.
 - Added support for blocking shutdown if certain devices are on the network (e.g. a television).
+- Added a test mode to enable verification of the logic without shutting down the server.
 - Updated the documentation.
 
 ### 1.2 (28th March 2025)
