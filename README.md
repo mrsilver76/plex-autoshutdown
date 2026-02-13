@@ -32,9 +32,9 @@ Despite being small, these scripts have some useful features:
 
 To configure the script, open it up in your preferred text editor. For Windows, Notepad will do. For Linux, I recommend [nano](https://www.nano-editor.org/) which usually comes preinstalled with most distributions.
 
-Only one setting (your `PLEX_TOKEN`) is required to get this script running. You can leave everything else as-is and the script will work perfectly fine.
-
 ### Basic configuration options
+
+Only one setting is required to get this script running. You can leave everything else as-is and the script will work perfectly fine.
 
 - **`PLEX_TOKEN`**  
   The script uses the Plex API in order to determine whether or not anything is streaming. To do this, it needs a token to use for authentication. Plex provides instructions on how to find the token for your Plex server [here](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/). 
@@ -64,13 +64,20 @@ You do not have to edit any of these settings. The script works fine with the de
 
 ## ▶️ Running the script
 
-To run the script, you can either double-click on it or run it from the command line. If you are using Linux then you will probably need to make the script executable with `chmod +x plex-autoshutdown.sh`.
+The script must be placed and run on your Plex server (the same machine Plex is installed on) to correctly detect streams, downloads and other activity. 
 
-To run on your Plex server, you will need to set up the script to run multiple times over the night. This is to ensure that if the shutdown is blocked because something is being streamed, then it will try again at a later time.
+On Linux, you will need to make it executable first by using `chmod +x plex-autoshutdown.sh`.
 
-The script will output information to the terminal/console and this is useful to aid in debugging. It is recommended that you redirect the output to a file in case you need to review the logs at a later date to understand why something happened. If you do not trim the logs then this file could get very big. To avoid this issue, you should consider setting up a regular schedule to trim or rotate the log file so it does not grow indefinitely.
+Before enabling automatic shutdown, run the script in test mode from the command line to confirm that everything is working correctly. When test mode is enabled, the script performs all checks and reports what it would do. Even if a condition would normally block a shutdown, the script will continue running so you can see the full set of results. _**It will never actually shut down your server in this mode!**_
 
-## 🪟 Installation (Windows)
+To use test mode, append any of `/t`, `/test`, `-t`, or `--test` to the command line, irrespective of your operating system:
+
+- Windows: `plex-autoshutdown.bat /test`
+- Linux: `plex-autoshutdown.sh -t`
+
+Once you've confirmed that the script works as expected, you need to configure your operating system to run the script multiple times over the night. This is to ensure that if the shutdown is blocked because something is being streamed or downloaded, then it will try again at a later time.
+
+## 🪟 Automatic scheduling (Windows)
 
 These instructions assume that you want to turn your server off from between midnight and 6am and that you will check the server status every 15 minutes.
 
@@ -100,7 +107,7 @@ You need to set up a scheduled task to run the script:
 - Ensure that “Wake the computer to run this task” is turned off.
 - Click on “OK”.
 
-## 🐧 Installation (Linux)
+## 🐧 Automatic scheduling (Linux)
 
 These instructions assume that you want to turn your server off from between midnight and 5:45am and that you will check the server status every 15 minutes.
 
@@ -115,6 +122,58 @@ You need to set up a cron to run this task:
 - Save the file.
 
 As the script outputs messages, this will be emailed to you. The use of `>/dev/null` ensures that this does not happen but you can also redirect it to a file if you wish.
+
+## 📝 Logging
+
+The script outputs information to the terminal or console detailing whether any streams, downloads, live TV, blocking processes/devices were detected and the decisions the script made. This information is useful for debugging and understanding why a shutdown did or did not occur.
+
+It is recommended to redirect the output to a text file so you can review it later. For example:
+
+- Windows: `plex-autoshutdown.bat > autoshutdown.log 2>&1`
+- Linux: `./plex-autoshutdown.sh > autoshutdown.log 2>&1`
+
+Over time, the log file can grow very large if not managed. To prevent this, you can use a simple rotation script to archive old logs and keep only recent entries. The following code assumes that you write out to `autoshutdown.log` and will maintain up to 7 days of history.
+
+**Windows** (save as `rotate-autoshutdown.bat`)
+```batch
+@echo off
+
+set "LOG_DIR=C:\path\to\logs"
+set "LOG_FILE=%LOG_DIR%\autoshutdown.log"
+
+rem Delete the oldest log
+del "%LOG_DIR%\autoshutdown-7.log" 2>nul
+
+rem Shift logs up by one
+for /l %%i in (6,-1,1) do (
+    ren "%LOG_DIR%\autoshutdown-%%i.log" "autoshutdown-%%~ni%%i+.log" 2>nul
+)
+
+rem Move today's log to autoshutdown-1.log
+move "%LOG_FILE%" "%LOG_DIR%\autoshutdown-1.log" 2>nul
+```
+
+**Linux** (save as `rotate-autoshutdown.sh`)
+```bash
+#!/bin/bash
+
+LOG_DIR="/path/to/logs"
+LOG_FILE="$LOG_DIR/autoshutdown.log"
+
+# Delete the oldest log
+rm -f "$LOG_DIR/autoshutdown-7.log"
+
+# Shift logs up by one
+for i in 6 5 4 3 2 1; do
+    mv "$LOG_DIR/autoshutdown-$i.log" "$LOG_DIR/autoshutdown-$((i+1)).log" 2>/dev/null
+done
+
+# Move today's log to autoshutdown-1.log
+mv "$LOG_FILE" "$LOG_DIR/autoshutdown-1.log" 2>/dev/null
+```
+
+
+This approach keeps your logs manageable while preserving recent history for troubleshooting. You can schedule these scripts using Task Scheduler on Windows or cron on Linux.
 
 ## 🔌 Automatic power on
 
