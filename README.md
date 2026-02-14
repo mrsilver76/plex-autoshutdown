@@ -123,16 +123,28 @@ You need to set up a cron to run this task:
 
 As the script outputs messages, this will be emailed to you. The use of `>/dev/null` ensures that this does not happen but you can also redirect it to a file if you wish.
 
+## 🔌 Automatic power on
+
+Once you have the script set up to shut down your machine, you also need some way to start it back up again in the morning.
+
+The easiest way is to change your BIOS settings to power on the machine at a specific time. To access the BIOS, you will usually need to press a key such as <kbd>Del</kbd>, <kbd>F1</kbd>, <kbd>F2</kbd>, <kbd>F10</kbd> or <kbd>Esc</kbd> immediately after powering on. If you’re unsure which key to use for your computer or motherboard, check the manufacturer’s instructions or search online.
+
+You can usually find the power-on scheduling option in your BIOS under a "Power" or "Advanced" menu, often called something like "Resume by RTC Alarm", "Wake on RTC", or "Wake on Alarm". If you don’t see it, check any "Power Management" or "ACPI" sections. 
+
+> [!TIP]
+> Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
+
+
 ## 📝 Logging
 
-The script outputs information to the terminal or console detailing whether any streams, downloads, live TV, blocking processes/devices were detected and the decisions the script made. This information is useful for debugging and understanding why a shutdown did or did not occur.
+The script outputs information to the terminal or console, showing whether any streams, downloads, live TV, blocking processes, or devices were detected, and what decisions the script made. This information can be useful for review or debugging. **Most of the time you won't need this output**, which is why the instructions either do nothing with it (on Windows) or redirect it to `/dev/null` (on Linux).
 
-It is recommended to redirect the output to a text file so you can review it later. For example:
+If you do decide you need to review the output (e.g. to troubleshoot an issue), you can redirect the output to a file by appending a redirect to the end of the command:
 
-- Windows: `plex-autoshutdown.bat > autoshutdown.log 2>&1`
-- Linux: `./plex-autoshutdown.sh > autoshutdown.log 2>&1`
+- Windows: `plex-autoshutdown.bat > "C:\path\to\logs\autoshutdown.log" 2>&1`
+- Linux: `./plex-autoshutdown.sh > /path/to/logs/autoshutdown.log 2>&1`
 
-Over time, the log file can grow very large if not managed. To prevent this, you can use a simple rotation script to archive old logs and keep only recent entries. The following code assumes that you write out to `autoshutdown.log` and will maintain up to 7 days of history.
+If you intend to keep this redirect in place indefinitely then, over time, the log file will grow very large. To prevent this, you can use a simple rotation script that runs daily to archive old logs and keep only recent entries. The following code should be called once a day (for example, on start up), assumes that you write out to `autoshutdown.log` and will maintain up to 7 days of history.
 
 **Windows** (save as `rotate-autoshutdown.bat`)
 ```batch
@@ -174,13 +186,6 @@ mv "$LOG_FILE" "$LOG_DIR/autoshutdown-1.log" 2>/dev/null
 
 
 This approach keeps your logs manageable while preserving recent history for troubleshooting. You can schedule these scripts using Task Scheduler on Windows or cron on Linux.
-
-## 🔌 Automatic power on
-
-Most modern computer BIOS’ allow you to configure a computer to power on at a specific time. You will need to Google the brand of your computer/motherboard to find out how to access the BIOS. If it usually through pressing one of the F keys on power up.
-
-> [!TIP]
-> Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
 
 ## ⚠️ Known issues
 
