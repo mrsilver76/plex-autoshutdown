@@ -1,10 +1,10 @@
 # Plex Autoshutdown
 
-<p><img src="https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white" alt="Windows"> <img src="https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black" alt="Linux"> <img src="https://img.shields.io/badge/License-Unlicense-000000?logo=unlicense&logoColor=white" alt="Unlicense"></p>
+<p><img src="https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white" alt="Windows"> <img src="https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black" alt="Linux"> <img src="https://img.shields.io/badge/License-Unlicense-000000?logo=unlicense&logoColor=white" alt="Unlicense"> <img src="https://img.shields.io/github/stars/mrsilver76/plex-autoshutdown"></p>
 
 *A simple script which will check that no-one is using Plex before shutting down the server it is running on.*
 
-This script is useful for people who have no requirement to run their Plex server 24/7 and have periods of time where no-one is using their server (eg. the early hours of the morning).
+This script is useful for people who have no requirement to run their Plex server 24/7 and have periods of time where no-one is using their server (e.g. the early hours of the morning).
 
 **There are two scripts, one for Windows uses and one for Linux users.** The Linux one may work with macOS, but I have no way of verifying. I'm happy to take a submission/fix from someone who owns one. 
 
@@ -14,13 +14,13 @@ Despite being small, these scripts have some useful features:
 
 * 🖥️ Works on Windows and Linux (and possibly macOS)
 * ⚙️ Easy to set up, there is only one option that you _**must**_ configure.
-* 🎬 Will not shut down a machine if there are active Plex streams (audio or video).
-* 📥 Will not shut down a machine if there are active Plex downloads.
-* 📺 Will not shut down a machine if live TV is being watched or recorded.
-* 🧩 Will not shut down a machine if certain processes (Plex related or not) are running.
-* 🏠 Will not shutdown a machine if certain devices are active on the network (e.g. a television).
-* ⏳ Will not force a machine to shut down for a (configurable) period of time after power up.
-* 🧪 Test mode to verify the logic without accidentally powering off your machine.
+* 🎬 Will not shut down a server if there are active Plex streams (audio or video).
+* 📥 Will not shut down a server if there are active Plex downloads.
+* 📺 Will not shut down a server if live TV is being watched or recorded.
+* 🧩 Will not shut down a server if certain processes (Plex related or not) are running.
+* 🏠 Will not shutdown a server if certain devices are active on the network (e.g. a smart TV with network access).
+* ⏳ Will not force a server to shut down for a configurable period of time after power up.
+* 🧪 Test mode to verify the logic without accidentally powering off your server.
 
 ## 📦 Download
 
@@ -34,7 +34,7 @@ To configure the script, open it up in your preferred text editor. For Windows, 
 
 ### Basic configuration options
 
-Only one setting is required to get this script running. You can leave everything else as-is and the script will work perfectly fine.
+**Only one setting is required to get this script running. You can leave everything else as-is and the script will work perfectly fine.**
 
 - **`PLEX_TOKEN`**  
   The script uses the Plex API in order to determine whether or not anything is streaming. To do this, it needs a token to use for authentication. Plex provides instructions on how to find the token for your Plex server [here](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/). 
@@ -44,7 +44,7 @@ Only one setting is required to get this script running. You can leave everythin
 > [!CAUTION]
 > You should never share your Plex token with anyone else.
 
-### Advanced configuration options
+### Optional advanced configuration options
 
 You do not have to edit any of these settings. The script works fine with the defaults and these options are only for fine-tuning behaviour.
 
@@ -64,11 +64,13 @@ You do not have to edit any of these settings. The script works fine with the de
 
 ## ▶️ Running the script
 
-The script must be placed and run on your Plex server (the same machine Plex is installed on) to correctly detect streams, downloads and other activity. 
+The script must be placed and run on your Plex server (the same machine Plex is installed on) to correctly detect streams, downloads, processes running and other activity. 
 
 On Linux, you will need to make it executable first by using `chmod +x plex-autoshutdown.sh`.
 
-Before enabling automatic shutdown, run the script in test mode from the command line to confirm that everything is working correctly. When test mode is enabled, the script performs all checks and reports what it would do. Even if a condition would normally block a shutdown, the script will continue running so you can see the full set of results. _**It will never actually shut down your server in this mode!**_
+**Before setting up the script to run automatically, run it in test mode from the command line to confirm everything works correctly!**
+
+When test mode is enabled, the script performs all checks and reports what it would do. Even if a condition would normally block a shutdown, the script will continue running so you can see the full set of results. _**It will never actually shut down your server in this mode!**_
 
 To use test mode, append any of `/t`, `/test`, `-t`, or `--test` to the command line, irrespective of your operating system:
 
@@ -89,7 +91,7 @@ You need to set up a scheduled task to run the script:
 - Click on “Start”, type “Task” and select “Task Scheduler”.
 - Click on “Create Task”.
 - Set the Name to: “Plex Autoshutdown”.
-- Set the Description to: “Automatically shut down this machine if Plex is not running”.
+- Set the Description to: “Automatically shut down this server if Plex is not running”.
 - If you run Plex without logging a user in, then you will need to enable “Run whether user is logged in or not”.
 - Click on the “Trigger” tab.
 - Click on “New”.
@@ -125,9 +127,9 @@ As the script outputs messages, this will be emailed to you. The use of `>/dev/n
 
 ## 🔌 Automatic power on
 
-Once you have the script set up to shut down your machine, you also need some way to start it back up again in the morning.
+Once you have the script set up to shut down your server at night, you also need some way to start the server back up again in the morning.
 
-The easiest way is to change your BIOS settings to power on the machine at a specific time. To access the BIOS, you will usually need to press a key such as <kbd>Del</kbd>, <kbd>F1</kbd>, <kbd>F2</kbd>, <kbd>F10</kbd> or <kbd>Esc</kbd> immediately after powering on. If you’re unsure which key to use for your computer or motherboard, check the manufacturer’s instructions or search online.
+The easiest way is to change your BIOS settings to power on the server at a specific time. To access the BIOS, you will usually need to press a key such as <kbd>Del</kbd>, <kbd>F1</kbd>, <kbd>F2</kbd>, <kbd>F10</kbd> or <kbd>Esc</kbd> immediately after powering on. If you’re unsure which key to use for your computer or motherboard, check the manufacturer’s instructions or search online.
 
 You can usually find the power-on scheduling option in your BIOS under a "Power" or "Advanced" menu, often called something like "Resume by RTC Alarm", "Wake on RTC", or "Wake on Alarm". If you don’t see it, check any "Power Management" or "ACPI" sections. 
 
@@ -141,49 +143,82 @@ The script outputs information to the terminal or console, showing whether any s
 
 If you do decide you need to review the output (e.g. to troubleshoot an issue), you can redirect the output to a file by appending a redirect to the end of the command:
 
-- Windows: `plex-autoshutdown.bat > "C:\path\to\logs\autoshutdown.log" 2>&1`
-- Linux: `./plex-autoshutdown.sh > /path/to/logs/autoshutdown.log 2>&1`
+- Windows: `plex-autoshutdown.bat >> "C:\path\to\logs\autoshutdown.log" 2>&1`
+- Linux: `./plex-autoshutdown.sh >> /path/to/logs/autoshutdown.log 2>&1`
 
-If you intend to keep this redirect in place indefinitely then, over time, the log file will grow very large. To prevent this, you can use a simple rotation script that runs daily to archive old logs and keep only recent entries. The following code should be called once a day (for example, on start up), assumes that you write out to `autoshutdown.log` and will maintain up to 7 days of history.
+Make sure you use `>>` and not `>`, as the latter will overwrite the log file every time the script is run.
+
+### Long term logging (advanced users)
+
+If you leave this redirect in place long term, the log file will continue to grow. It will not grow quickly, but over time it will become unnecessarily large.
+
+A simple way to manage this is monthly rotation based on the file’s last modified date. When the month changes, the current log is renamed and a fresh one starts. This keeps up to two months of logs, which is usually more than enough for troubleshooting.
+
+The scripts below implement this approach. Configure your server to run the appropriate script at startup.
+
+>[!NOTE]
+>Rotation is triggered the first time the server starts in a new month. If there are log entries written in the early hours of the first day of the new month (so before rotation runs) then those entries will be moved into the previous month’s file. They are not lost, but they will appear in the rotated log rather than the new current one.
 
 **Windows** (save as `rotate-autoshutdown.bat`)
 ```batch
 @echo off
+setlocal
 
-set "LOG_DIR=C:\path\to\logs"
-set "LOG_FILE=%LOG_DIR%\autoshutdown.log"
+rem ----- Configuration --------------------
 
-rem Delete the oldest log
-del "%LOG_DIR%\autoshutdown-7.log" 2>nul
+set "LOG_DIR=C:\Logs"
+set "LOG_FILE=autoshutdown.log"
 
-rem Shift logs up by one
-for /l %%i in (6,-1,1) do (
-    ren "%LOG_DIR%\autoshutdown-%%i.log" "autoshutdown-%%~ni%%i+.log" 2>nul
-)
+rem ----- End configuration ----------------
 
-rem Move today's log to autoshutdown-1.log
-move "%LOG_FILE%" "%LOG_DIR%\autoshutdown-1.log" 2>nul
+set "CURRENT_LOG=%LOG_DIR%\%LOG_FILE%"
+set "OLD_LOG=%LOG_DIR%\autoshutdown.old.log"
+
+rem Exit if there is no current log file
+if not exist "%CURRENT_LOG%" goto :eof
+
+rem Get today's date and the last modified date of the log (in format YY-MM)
+for /f %%A in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM"') do set "NOW_YYYYMM=%%A"
+for /f %%A in ('powershell -NoProfile -Command "(Get-Item \"%CURRENT_LOG%\").LastWriteTime.ToString(\"yyyy-MM\")"') do set "LOG_YYYYMM=%%A"
+
+# Exit if the dates are different
+if "%NOW_YYYYMM%"=="%LOG_YYYYMM%" goto :eof
+
+# Remove old log and move current one to old
+if exist "%OLD_LOG%" del "%OLD_LOG%"
+move "%CURRENT_LOG%" "%OLD_LOG%" >nul
+
+endlocal
 ```
 
 **Linux** (save as `rotate-autoshutdown.sh`)
 ```bash
 #!/bin/bash
 
-LOG_DIR="/path/to/logs"
-LOG_FILE="$LOG_DIR/autoshutdown.log"
+# ----- Configuration --------------------
 
-# Delete the oldest log
-rm -f "$LOG_DIR/autoshutdown-7.log"
+LOG_DIR="/var/log"
+LOG_FILE="autoshutdown.log"
 
-# Shift logs up by one
-for i in 6 5 4 3 2 1; do
-    mv "$LOG_DIR/autoshutdown-$i.log" "$LOG_DIR/autoshutdown-$((i+1)).log" 2>/dev/null
-done
+# ----- End configuration ----------------
 
-# Move today's log to autoshutdown-1.log
-mv "$LOG_FILE" "$LOG_DIR/autoshutdown-1.log" 2>/dev/null
+CURRENT_LOG="$LOG_DIR/$LOG_FILE"
+OLD_LOG="$LOG_DIR/autoshutdown.old.log"
+
+# Exit if there is no current log file
+[ ! -f "$CURRENT_LOG" ] && exit 0
+
+# Get today's date and the last modified date of the log (in format YY-MM)
+NOW_YYYYMM=$(date +"%Y-%m")
+LOG_YYYYMM=$(date -r "$CURRENT_LOG" +"%Y-%m")
+
+# Exit if the dates are different
+[ "$NOW_YYYYMM" = "$LOG_YYYYMM" ] && exit 0
+
+# Remove old log and move current one to old
+[ -f "$OLD_LOG" ] && rm -f "$OLD_LOG"
+mv "$CURRENT_LOG" "$OLD_LOG"
 ```
-
 
 This approach keeps your logs manageable while preserving recent history for troubleshooting. You can schedule these scripts using Task Scheduler on Windows or cron on Linux.
 
@@ -205,9 +240,8 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 - **Support for secured connections.** This would enable the script to work even if "Secured connections" is set to "Required" within the Plex server.
 - **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
-- **Output to logs instead of screen.** Add or improve logging so that script output goes to log files rather than just the console, useful for monitoring and debugging. 
-- **Sleep option, instead of power down.** Provide an option to put the machine into sleep/standby rather than fully powering it down when no active streams are detected. 
-- **Test command line option.** Add a “dry-run” or “test” command line flag that will simulate the shutdown check without executing the shutdown, for validation purposes. 
+- **Output to logs instead of screen.** Remove the need to redirect output by allowing configuration in the script to output logs to terminal, file, both or none. Handle log rotation automatically.
+- **Sleep option, instead of power down.** Provide an option to put the server into sleep/standby rather than fully powering it down when no active streams are detected. 
 
 ## 📝 Attribution
 - Plex is a registered trademark of Plex, Inc. This tool is not affiliated with or endorsed by Plex, Inc.
