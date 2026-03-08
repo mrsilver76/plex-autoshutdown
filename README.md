@@ -251,10 +251,11 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 ### 1.3 (xx March 2026)
 - Added connectivity tests to check if Plex is running and the supplied token is valid.
-- Improved the formatting of the output to make troubleshooting easier.
+- Improved the formatting of the output to make troubleshooting and logging easier.
 - Added support for blocking shutdown if certain processes are running.
 - Added support for blocking shutdown if certain devices are on the network (e.g. a television).
 - Added a test mode to enable verification of the logic without shutting down the server.
+- Removed use of deprecated `wmic` command and replaced it with PowerShell for uptime checks (Windows). 
 - Updated the documentation.
 
 ### 1.2 (28th March 2025)
