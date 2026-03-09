@@ -148,6 +148,8 @@ If you do decide you need to review the output (e.g. to troubleshoot an issue), 
 
 Make sure you use `>>` and not `>`, as the latter will overwrite the log file every time the script is run.
 
+<!--
+
 ### Long term logging (advanced users)
 
 If you leave this redirect in place long term, the log file will continue to grow. It will not grow quickly, but over time it will become unnecessarily large.
@@ -222,6 +224,8 @@ mv "$CURRENT_LOG" "$OLD_LOG"
 
 This approach keeps your logs manageable while preserving recent history for troubleshooting. You can schedule these scripts using Task Scheduler on Windows or cron on Linux.
 
+-->
+
 ## ⚠️ Known issues
 
 - The Plex API may continue reporting that content is being streamed for several minutes after playback stops. There is no workaround for this.
@@ -239,6 +243,7 @@ This script currently meets the needs it was designed for, and no major new feat
 Some other improvements I'm thinking about, but won't implement unless there is demand, are:
 
 - **Support for secured connections.** This would enable the script to work even if "Secured connections" is set to "Required" within the Plex server.
+- **Configurable behavior when Plex is unreachable/down.** Allow the script to either exit and leave the server running or proceed with shutdown when Plex cannot be contacted.
 - **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
 - **Output to logs instead of screen.** Remove the need to redirect output by allowing configuration in the script to output logs to terminal, file, both or none. Handle log rotation automatically.
 - **Sleep option, instead of power down.** Provide an option to put the server into sleep/standby rather than fully powering it down when no active streams are detected. 
