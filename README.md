@@ -244,6 +244,7 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 - **Support for secured connections.** This would enable the script to work even if "Secured connections" is set to "Required" within the Plex server.
 - **Support for non-pingable devices.** Allow specification of a port number which can then be used to probe a device that ignores `ping` requests.
+- **Migrate Windows batch to Powershell.** Move the Windows version to the more featureful, robust and saner Powershell format.
 - **Configurable behavior when Plex is unreachable/down.** Allow the script to either exit and leave the server running or proceed with shutdown when Plex cannot be contacted.
 - **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
 - **Output to logs instead of screen.** Remove the need to redirect output by allowing configuration in the script to output logs to terminal, file, both or none. Handle log rotation automatically.
