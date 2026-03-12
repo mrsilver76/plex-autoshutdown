@@ -60,7 +60,7 @@ You do not have to edit any of these settings. The script works fine with the de
   A semi-colon (`;`) separated list of processes that will block shutdown if they are running. This is useful for delaying shutdown until certain tasks (either Plex related or not) finish. The default code includes `Plex Transcoder` here to ensure that the server isn’t incorrectly shut down while Plex is transcoding - even if the Plex API reports no activity.
 
 - **`BLOCKING_ADDRESSES`**  
-  A semi-colon (`;`) separated list of devices that will block shutdown if they are active. Each entry can be an IP address or hostname (e.g. `192.168.0.20;SAMSUNG-TV`) and devices on this list are assumed to be in use if they respond to [ping](https://www.lifewire.com/ping-command-2618099) or appear in [ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol). If you want to use IP addresses then it is recommended to configure your router to assign a static (same) IP address to the device to stop it changing.
+  A semi-colon (`;`) separated list of devices that will block shutdown if they are active. Each entry can be an IP address or hostname (e.g. `192.168.0.20;SAMSUNG-TV`) and devices on this list are assumed to be in use if they respond to a network [ping](https://www.lifewire.com/ping-command-2618099). If you want to use IP addresses then it is recommended to configure your router to assign a static (same) IP address to the device to stop it changing.
 
 ## ▶️ Running the script
 
@@ -243,6 +243,7 @@ This script currently meets the needs it was designed for, and no major new feat
 Some other improvements I'm thinking about, but won't implement unless there is demand, are:
 
 - **Support for secured connections.** This would enable the script to work even if "Secured connections" is set to "Required" within the Plex server.
+- **Support for non-pingable devices.** Allow specification of a port number which can then be used to probe a device that ignores `ping` requests.
 - **Configurable behavior when Plex is unreachable/down.** Allow the script to either exit and leave the server running or proceed with shutdown when Plex cannot be contacted.
 - **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
 - **Output to logs instead of screen.** Remove the need to redirect output by allowing configuration in the script to output logs to terminal, file, both or none. Handle log rotation automatically.
