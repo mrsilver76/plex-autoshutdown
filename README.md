@@ -134,8 +134,8 @@ The easiest way is to change your BIOS settings to power on the server at a spec
 You can usually find the power-on scheduling option in your BIOS under a "Power" or "Advanced" menu, often called something like "Resume by RTC Alarm", "Wake on RTC", or "Wake on Alarm". If you don’t see it, check any "Power Management" or "ACPI" sections. 
 
 > [!TIP]
-> Whilst you are configuring this, I recommend you also enable the “automatically power on after power loss” option. This means that if you have a power cut then the server will automatically boot again when power is restored.
-
+> - Turn on “automatic power on after power loss” in the BIOS so the server will restart automatically if the electricity goes out.
+> - Ensure Plex tasks don’t try to run while the server is off! Schedule them to start about 5 minutes after it powers on.
 
 ## 📝 Logging
 
