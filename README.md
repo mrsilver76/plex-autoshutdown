@@ -2,15 +2,13 @@
 
 <p><img src="https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white" alt="Windows"> <img src="https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black" alt="Linux"> <img src="https://img.shields.io/badge/License-Unlicense-000000?logo=unlicense&logoColor=white" alt="Unlicense"> <img src="https://img.shields.io/github/stars/mrsilver76/plex-autoshutdown"></p>
 
-*A simple script which will check that no-one is using Plex before shutting down the server it is running on.*
+*A simple script that automatically shuts down your Plex server when no one is using it.*
 
-This script is useful for people who have no requirement to run their Plex server 24/7 and have periods of time where no-one is using their server (e.g. the early hours of the morning).
+This script checks for active streams and other activity before powering off the machine, making it useful for servers that do not need to run 24/7 and sit idle for long periods (typically overnight).
 
-**There are two scripts, one for Windows uses and one for Linux users.** The Linux one may work with macOS, but I have no way of verifying. I'm happy to take a submission/fix from someone who owns one. 
+**There are two scripts, one for Windows and one for Linux.** The Linux version may also work on macOS, but this has not been tested. Contributions from macOS users are welcome.
 
 ## 🧰 Features
-
-Despite being small, these scripts have some useful features:
 
 * 🖥️ Works on Windows and Linux (and possibly macOS)
 * ⚙️ Easy to set up, there is only one option that you _**must**_ configure.
@@ -18,14 +16,14 @@ Despite being small, these scripts have some useful features:
 * 📥 Will not shut down a server if there are active Plex downloads.
 * 📺 Will not shut down a server if live TV is being watched or recorded.
 * 🧩 Will not shut down a server if certain processes (Plex related or not) are running.
-* 🏠 Will not shutdown a server if certain devices are active on the network (e.g. a smart TV with network access).
+* 🏠 Will not shutdown a server if certain devices are active on the network (e.g. a smart TV or streaming device).
 * ⏳ Will not force a server to shut down for a configurable period of time after power up.
 * 🧪 Test mode to verify the logic without accidentally powering off your server.
 
 ## 📦 Download
 
-1. Get the latest version from https://github.com/mrsilver76/plex-autoshutdown/releases. Windows users should download the zip file, Linux users should download the tar.gz file.
-3. Decompress the file. On Windows, you can double-click the file. On Linux you should use the `gunzip` command.
+1. Download the latest version from the [Releases page](https://github.com/mrsilver76/plex-autoshutdown/releases) page. Both archives contain the same files. The `.zip` file is generally easiest for Windows users, while Linux users will typically use the `.tar.gz` version.
+2. Decompress the file. On Windows, you should right-click on the file and select "Extract All...". On Linux you should use the `gunzip` command.
 4. Use the file ending in `.bat` for Windows and the file ending `.sh` for Linux.
 
 ## ⚙️ Configuration
@@ -68,9 +66,8 @@ The script must be placed and run on your Plex server (the same machine Plex is 
 
 On Linux, you will need to make it executable first by using `chmod +x plex-autoshutdown.sh`.
 
-**Before setting up the script to run automatically, run it in test mode from the command line to confirm everything works correctly!**
-
-When test mode is enabled, the script performs all checks and reports what it would do. Even if a condition would normally block a shutdown, the script will continue running so you can see the full set of results. _**It will never actually shut down your server in this mode!**_
+⚠️ **Before scheduling the script to run automatically, run it in test mode to ensure everything works as expected.**<br>
+Test mode performs all the same checks as normal mode but will not shut down your server, letting you safely experiment with settings and scenarios.
 
 To use test mode, append any of `/t`, `/test`, `-t`, or `--test` to the command line, irrespective of your operating system:
 
@@ -229,8 +226,8 @@ This approach keeps your logs manageable while preserving recent history for tro
 ## ⚠️ Known issues
 
 - The Plex API may continue reporting that content is being streamed for several minutes after playback stops. There is no workaround for this.
-- The Plex API may fail to report active transcoding. To prevent shutdown during transcoding, the `Plex Transcoder` entry in `BLOCKING_PROCESSES` acts as an effective workaround.
-- The script will not work if "Secured connections" is set to "Required" within Plex.
+- The Plex API may fail to report active transcoding. The workaround for this is the inclusion of the `Plex Transcoder` entry in the `BLOCKING_PROCESSES` setting.
+- The script will not work if "Secured connections" is set to "Required" within Plex. This is a possible future development (subject to demand).
 
 ## 🛟 Questions/problems?
 
@@ -244,7 +241,7 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 - **Support for secured connections.** This would enable the script to work even if "Secured connections" is set to "Required" within the Plex server.
 - **Support for non-pingable devices.** Allow specification of a port number which can then be used to probe a device that ignores `ping` requests.
-- **Migrate Windows batch to Powershell.** Move the Windows version to the more featureful, robust and saner Powershell format.
+- **Migrate Windows script to PowerShell.** Replace the current batch implementation with PowerShell to improve reliability, maintainability and access to modern Windows features.
 - **Configurable behavior when Plex is unreachable/down.** Allow the script to either exit and leave the server running or proceed with shutdown when Plex cannot be contacted.
 - **Report number of streams rather than just checking for 0.** Instead of only detecting whether there are zero streams, report how many active streams are running so you can decide based on count thresholds. 
 - **Output to logs instead of screen.** Remove the need to redirect output by allowing configuration in the script to output logs to terminal, file, both or none. Handle log rotation automatically.
