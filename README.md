@@ -55,10 +55,16 @@ You do not have to edit any of these settings. The script works fine with the de
 > If you set this value too low, then your server may turn off very quickly after you have turned it back on.
 
 - **`BLOCKING_PROCESSES`**  
-  A semi-colon (`;`) separated list of processes that will block shutdown if they are running. This is useful for delaying shutdown until certain tasks (either Plex related or not) finish. The default code includes `Plex Transcoder` here to ensure that the server isn’t incorrectly shut down while Plex is transcoding - even if the Plex API reports no activity.
+  A semi-colon (`;`) separated list of processes that will block shutdown if they are running. This can be used to delay shutdown until certain tasks finish, whether Plex-related or not. Multiple processes can be listed, and the script will prevent shutdown if any are running.
+
+>[!NOTE]
+>The default script includes `Plex Transcoder` to prevent the server from shutting down while Plex is transcoding, even if the Plex API incorrectly reports no activity.
 
 - **`BLOCKING_ADDRESSES`**  
-  A semi-colon (`;`) separated list of devices that will block shutdown if they are active. Each entry can be an IP address or hostname (e.g. `192.168.0.20;SAMSUNG-TV`) and devices on this list are assumed to be in use if they respond to a network [ping](https://www.lifewire.com/ping-command-2618099). If you want to use IP addresses then it is recommended to configure your router to assign a static (same) IP address to the device to stop it changing.
+  A semi-colon (`;`) separated list of devices that will block shutdown if they are active. Each entry can be an IP address or hostname (e.g. `192.168.0.20;SAMSUNG-TV`). Devices on this list are considered "in use" if they respond to a network [ping](https://www.lifewire.com/ping-command-2618099). Multiple devices can be listed, and the script will prevent shutdown if any respond.
+
+>[!TIP]
+>If you are using IP addresses, assign a static IP to each device (via your router) to prevent the address from changing.
 
 ## ▶️ Running the script
 
