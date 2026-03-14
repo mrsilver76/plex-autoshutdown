@@ -261,7 +261,9 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 ### 1.3 (xx March 2026)
 - Added connectivity tests to check if Plex is running and the supplied token is valid.
+- Added validation that the supplied Plex token is not blank or set to the placeholder.
 - Improved the formatting of the output to make troubleshooting and logging easier.
+- Adjusted the logic so all checks run even if earlier ones fail, making it easier to see every reason shutdown might be blocked.
 - Added support for blocking shutdown if certain processes are running.
 - Added support for blocking shutdown if certain devices are on the network (e.g. a television).
 - Added a test mode to enable verification of the logic without shutting down the server.
