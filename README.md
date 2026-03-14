@@ -259,7 +259,7 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 ## 🕰️ Version history
 
-### 1.3 (xx March 2026)
+### 1.3 (14th March 2026)
 - Added connectivity tests to check if Plex is running and the supplied token is valid.
 - Added validation that the supplied Plex token is not blank or set to the placeholder.
 - Improved the formatting of the output to make troubleshooting and logging easier.
