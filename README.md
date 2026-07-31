@@ -8,6 +8,9 @@ This script checks for active streams and other activity before powering off the
 
 **There are two scripts, one for Windows and one for Linux.** The Linux version may also work on macOS, but this has not been tested. Contributions from macOS users are welcome.
 
+>[!WARNING]
+>**Known Plex Bug Notice:** A defect in Plex Media Server (v1.43.3.10828) prevents the API from reporting transcoding for a download.<br>[A bug report has been submitted on the Plex Forum.](https://forums.plex.tv/t/bug-activities-endpoint-not-reporting-when-offline-transcoding-is-happening/941198) 
+
 ## 🧰 Features
 
 * 🖥️ Works on Windows and Linux (and possibly macOS)
