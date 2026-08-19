@@ -9,7 +9,7 @@ This script checks for active streams and other activity before powering off the
 **There are two scripts, one for Windows and one for Linux.** The Linux version may also work on macOS, but this has not been tested. Contributions from macOS users are welcome.
 
 >[!WARNING]
->**Known Plex Bug Notice:** There is a defect in Plex Media Server (v1.43.3.10828 and later versions) which means that the Plex API does not correctly report when transcoding is happening for a download.<br>[A bug report has been submitted on the Plex Forum.](https://forums.plex.tv/t/bug-activities-endpoint-not-reporting-when-offline-transcoding-is-happening/941198) 
+>**Known Plex Bug Notice:** Plex Media Server v1.43.3.10828 and later versions have a defect where the Plex API does not correctly report when transcoding is happening for a download. This could cause the API based activity check to miss an active transcode. The script mitigates this by checking for the `Plex Transcoder` process before allowing shutdown. ([Plex forum bug report](https://forums.plex.tv/t/bug-activities-endpoint-not-reporting-when-offline-transcoding-is-happening/941198))
 
 ## 🧰 Features
 
@@ -61,7 +61,7 @@ You do not have to edit any of these settings. The script works fine with the de
   A semi-colon (`;`) separated list of processes that will block shutdown if they are running. This can be used to delay shutdown until certain tasks finish, whether Plex-related or not. Multiple processes can be listed, and the script will prevent shutdown if any are running.
 
 >[!NOTE]
->The default script includes `Plex Transcoder` to prevent the server from shutting down while Plex is transcoding, even if the Plex API incorrectly reports no activity.
+>The default script includes `Plex Transcoder` because Plex uses this process for several tasks, including media transcoding, generating video preview thumbnails, and detecting intros. The process may therefore be active even when the Plex API reports no activity.
 
 - **`BLOCKING_ADDRESSES`**  
   A semi-colon (`;`) separated list of devices that will block shutdown if they are active. Each entry can be an IP address or hostname (e.g. `192.168.0.20;SAMSUNG-TV`). Devices on this list are considered "in use" if they respond to a network [ping](https://www.lifewire.com/ping-command-2618099). Multiple devices can be listed, and the script will prevent shutdown if any respond.
@@ -262,6 +262,11 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 
 ## 🕰️ Version history
 
+### 1.3.1 (19th August 2026)
+- [Windows] Fixed blocking process detection for process names containing spaces.
+- [Linux] Fixed blocking process detection to require an exact process name match.
+- Updated the `BLOCKING_PROCESSES` documentation to clarify that Plex Transcoder can be used for transcoding, preview thumbnail generation, and intro detection.
+
 ### 1.3 (14th March 2026)
 - Added connectivity tests to check if Plex is running and the supplied token is valid.
 - Added validation that the supplied Plex token is not blank or set to the placeholder.
@@ -270,7 +275,7 @@ Some other improvements I'm thinking about, but won't implement unless there is 
 - Added support for blocking shutdown if certain processes are running.
 - Added support for blocking shutdown if certain devices are on the network (e.g. a television).
 - Added a test mode to enable verification of the logic without shutting down the server.
-- Removed use of deprecated `wmic` command and replaced it with PowerShell for uptime checks (Windows). 
+- [Windows] Removed use of deprecated `wmic` command and replaced it with PowerShell for uptime checks. 
 - Updated the documentation.
 
 ### 1.2 (28th March 2025)
