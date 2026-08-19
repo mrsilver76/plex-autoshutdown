@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 rem Plex Autoshutdown (for Windows)
-rem Version 1.3 (released 14th March 2025)
+rem Version 1.3.1 (released 19th August 2026)
 rem https://github.com/mrsilver76/plex-autoshutdown
 rem
 rem A simple script which, when executed, will check that no-one is using Plex
@@ -61,13 +61,12 @@ set MIN_UPTIME=7200
 
 rem BLOCKING_PROCESSES
 rem A semi-colon (;) separated list of processes that will block shutdown
-rem if they are running. This is useful for delaying shutdown until certain
-rem tasks (either Plex related or not) finish. For example we include
-rem "Plex Transcoder.exe" here to ensure that the server isn’t incorrectly
-rem shut down while Plex is transcoding - even if the Plex API reports no
-rem activity.
+rem if they are running. This is useful for delaying shutdown while certain
+rem Plex or other background tasks are active. For example, "Plex Transcoder.exe"
+rem may be running while Plex is transcoding media, generating video preview
+rem thumbnails, or detecting intros, even when the Plex API reports no activity.
 
-set BLOCKING_PROCESSES=Plex Transcoder.exe
+set "BLOCKING_PROCESSES=Plex Transcoder.exe"
 
 rem BLOCKING_ADDRESSES
 rem A semi-colon (;) separated list of devices that will block shutdown if
@@ -77,11 +76,11 @@ rem be in use if they respond to a network ping. If you want to use
 rem IP addresses then it is recommended to configure your router to
 rem assign a static (same) IP address to the device to stop it changing.
 
-set BLOCKING_ADDRESSES=
+set "BLOCKING_ADDRESSES="
 
 rem ----- End of configuration settings. Code starts here ----------------
 
-set VERSION=1.3
+set VERSION=1.3.1
 set DO_SHUTDOWN=true
 
 rem Parse arguments looking for test mode defined
@@ -205,13 +204,15 @@ del /f "%TEMP%\plex-autoshutdown.tmp"
 rem Check if any processes are running that would block shutdown
 
 if defined BLOCKING_PROCESSES (
-    for %%P in (%BLOCKING_PROCESSES%) do (
-        set PROC_NAME=%%P
-        set PROC_NAME=!PROC_NAME:;=!
+    for %%P in ("%BLOCKING_PROCESSES:;=" "%") do (
+        set "PROC_NAME=%%~P"
+
+        rem Note: we use "find" to raise an error level
         tasklist /FI "IMAGENAME eq !PROC_NAME!" 2>NUL | find /I "!PROC_NAME!" >NUL
-        if !errorlevel!==0 (
+
+        if not errorlevel 1 (
             call :Log Found process running: !PROC_NAME!
-            set DO_SHUTDOWN=false
+            set "DO_SHUTDOWN=false"
         )
     )
 )
@@ -224,14 +225,14 @@ rem In testing, a TV turned off 5 hours earlier was still listed in the ARP
 rem cache, making this method unreliable for detecting active devices.
 
 if defined BLOCKING_ADDRESSES (
-    for %%T in (%BLOCKING_ADDRESSES%) do (
- 
-        rem Ping the address/hostname to see if device is online
+    for %%T in ("%BLOCKING_ADDRESSES:;=" "%") do (
 
-        ping -n 1 -w 2000 %%T | find "TTL=" >NUL
-        if !errorlevel! EQU 0 (
-            call :Log Found active device at %%T
-            set DO_SHUTDOWN=false
+        rem Ping the address/hostname to see if device is online
+        ping -n 1 -w 2000 "%%~T" | find "TTL=" >NUL
+
+        if not errorlevel 1 (
+            call :Log Found active device at %%~T
+            set "DO_SHUTDOWN=false"
         )
     )
 )

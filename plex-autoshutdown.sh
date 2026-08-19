@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Plex Autoshutdown (for Linux)
-# Version 1.3 (released 14th March 2025)
+# Version 1.3.1 (released 19th August 2026)
 # https://github.com/mrsilver76/plex-autoshutdown
 #
 # A simple script which, when executed, will check that no-one is using Plex
@@ -60,11 +60,10 @@ MIN_UPTIME=7200
 
 # BLOCKING_PROCESSES
 # A semi-colon (;) separated list of processes that will block shutdown
-# if they are running. This is useful for delaying shutdown until certain
-# tasks (either Plex related or not) finish. For example we include
-# "Plex Transcoder" here to ensure that the server isn’t incorrectly
-# shut down while Plex is transcoding - even if the Plex API reports no
-# activity.
+# if they are running. This is useful for delaying shutdown while certain
+# Plex or other background tasks are active. For example, "Plex Transcoder"
+# may be running while Plex is transcoding media, generating video preview
+# thumbnails, or detecting intros, even when the Plex API reports no activity.
 
 BLOCKING_PROCESSES="Plex Transcoder"
 
@@ -80,7 +79,7 @@ BLOCKING_ADDRESSES=""
 
 # ----- End of configuration settings. Code starts here ----------------
 
-VERSION="1.3"
+VERSION="1.3.1"
 DO_SHUTDOWN=true
 
 # Log
@@ -204,15 +203,17 @@ rm -f "/tmp/plex-autoshutdown.tmp"
 
 if [[ -n "$BLOCKING_PROCESSES" ]]; then
     IFS=';' read -ra PROC_ARRAY <<< "$BLOCKING_PROCESSES"
+
     for PROC_NAME in "${PROC_ARRAY[@]}"; do
 
         # Skip empty strings
         [[ -z "$PROC_NAME" ]] && continue
 
-        if ps -ef | grep -i "$PROC_NAME" | grep -v grep >/dev/null; then
+        if pgrep -if "$PROC_NAME" >/dev/null; then
             Log "Found process running: $PROC_NAME"
             DO_SHUTDOWN=false
         fi
+
     done
 fi
 
@@ -223,7 +224,6 @@ fi
 # In testing, a TV turned off 5 hours earlier was still listed in the ARP
 # cache, making this method unreliable for detecting active devices.
 
-# Only run if BLOCKING_ADDRESSES is defined
 if [[ -n "$BLOCKING_ADDRESSES" ]]; then
     IFS=';' read -ra ADDR_ARRAY <<< "$BLOCKING_ADDRESSES"
 
